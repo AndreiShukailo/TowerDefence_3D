@@ -17,8 +17,8 @@ public class Cells : MonoBehaviour
     private void GenerateGrid()
     {
         var cells = gameObject.GetComponentsInChildren<Cell>();
-        if(cells != null)
-            foreach(var cell in cells)
+        if (cells != null)
+            foreach (var cell in cells)
                 DestroyImmediate(cell.gameObject);
 
         var size = _towersGrid.Size;
@@ -27,7 +27,7 @@ public class Cells : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 var cell = Instantiate(_cellPrefab, transform);
-                cell.transform.position = Vector3.zero + new Vector3(x, 0, y);
+                cell.transform.position = new Vector3(0.5f, 0, 0.5f) + new Vector3(x, 0, y);
                 cell.CreateCell(x, y);
             }
     }
