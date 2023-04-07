@@ -51,7 +51,7 @@ public class TowersGrid : MonoBehaviour
                 if (avalible)
                     _flyingTower.transform.position = new Vector3(x + 0.5f, 0, y + 0.5f);
                 else
-                    _flyingTower.transform.position = new Vector3(worldPosition.x, 0, worldPosition.z);
+                    _flyingTower.transform.position = new Vector3(worldPosition.x, 0.5f, worldPosition.z);
 
                 _flyingTower.SetTransparent(avalible);
 
