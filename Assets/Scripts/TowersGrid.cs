@@ -45,9 +45,6 @@ public class TowersGrid : MonoBehaviour
                 var y = (int)worldPosition.z;
                 var avalible = false;
 
-
-                Debug.Log($"{worldPosition.x}-{x}  {worldPosition.y}-{y}");
-
                 if (GridArray.Any(cell => (cell.X == x) && (cell.Y == y) && cell.IsPlasingCell && cell.AllowPlasing))
                     avalible = true;
 
@@ -58,9 +55,9 @@ public class TowersGrid : MonoBehaviour
 
                 _flyingTower.SetTransparent(avalible);
 
-                if (avalible && Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonUp(0))
                 {
-                    PlaceFlyingTower(x, y);
+                    PlaceFlyingTower(x, y, avalible);
                 }
             }
         }
@@ -82,12 +79,21 @@ public class TowersGrid : MonoBehaviour
         _cells.gameObject.SetActive(true);
     }
 
-    private void PlaceFlyingTower(int placeX, int plaseY)
+    private void PlaceFlyingTower(int placeX, int plaseY, bool avalible)
     {
-        _flyingTower.SetDefaultTransparent();
-        _grid[placeX, plaseY].PlaceTower();
+        if (avalible)
+        {
+            _flyingTower.SetDefaultTransparent();
+            _grid[placeX, plaseY].PlaceTower();
+
+            _cells.gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(_flyingTower.gameObject);
+            _cells.gameObject.SetActive(false);
+        }
 
         _flyingTower = null;
-        _cells.gameObject.SetActive(false);
     }
 }

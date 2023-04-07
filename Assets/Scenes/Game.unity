@@ -1457,7 +1457,7 @@ MonoBehaviour:
   _x: 1
   _y: 3
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &132597158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1934,7 +1934,7 @@ MonoBehaviour:
   _x: 3
   _y: 4
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &195074107
 GameObject:
   m_ObjectHideFlags: 0
@@ -2888,7 +2888,7 @@ MonoBehaviour:
   _x: 7
   _y: 4
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &378084437
 GameObject:
   m_ObjectHideFlags: 0
@@ -4778,7 +4778,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636143649}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5855,7 +5855,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719437716}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6626,7 +6626,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837253687}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6839,7 +6839,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846139155}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6995,6 +6995,7 @@ GameObject:
   - component: {fileID: 883116433}
   - component: {fileID: 883116432}
   - component: {fileID: 883116431}
+  - component: {fileID: 883116434}
   m_Layer: 5
   m_Name: BildTower
   m_TagString: Untagged
@@ -7065,19 +7066,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 883116432}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 438270942}
-        m_TargetAssemblyTypeName: TowersGrid, Assembly-CSharp
-        m_MethodName: StartPlacingTower
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2483800527167818499, guid: 66d20c80058c44443abd5c29d37969fb, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &883116432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7116,6 +7105,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883116429}
   m_CullTransparentMesh: 1
+--- !u!114 &883116434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883116429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4137000fedf1aaa4682252fac20636a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _towersGrid: {fileID: 438270942}
+  _towr: {fileID: 2483800527167818499, guid: 66d20c80058c44443abd5c29d37969fb, type: 3}
 --- !u!1 &900393821
 GameObject:
   m_ObjectHideFlags: 0
@@ -8092,7 +8095,7 @@ MonoBehaviour:
   _x: 2
   _y: 4
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &1108082791
 GameObject:
   m_ObjectHideFlags: 0
@@ -8662,7 +8665,7 @@ MonoBehaviour:
   _x: 6
   _y: 4
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &1189882182
 GameObject:
   m_ObjectHideFlags: 0
@@ -8713,7 +8716,7 @@ MonoBehaviour:
   _x: 8
   _y: 5
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &1206078092
 GameObject:
   m_ObjectHideFlags: 0
@@ -9068,7 +9071,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248815781}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9160,7 +9163,7 @@ MonoBehaviour:
   _x: 5
   _y: 4
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &1259561609
 GameObject:
   m_ObjectHideFlags: 0
@@ -9362,7 +9365,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268831979}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -10460,7 +10463,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434229875}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -11122,7 +11125,7 @@ MonoBehaviour:
   _x: 9
   _y: 5
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &1642115360
 GameObject:
   m_ObjectHideFlags: 0
@@ -11579,7 +11582,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755460081}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -11741,7 +11744,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781902950}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12197,7 +12200,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850110451}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12715,7 +12718,7 @@ MonoBehaviour:
   _x: 8
   _y: 4
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &1934038655
 GameObject:
   m_ObjectHideFlags: 0
@@ -13232,7 +13235,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963128477}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -13324,7 +13327,7 @@ MonoBehaviour:
   _x: 0
   _y: 3
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &1979881777
 GameObject:
   m_ObjectHideFlags: 0
@@ -13537,7 +13540,7 @@ MonoBehaviour:
   _x: 2
   _y: 3
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &2033315890
 GameObject:
   m_ObjectHideFlags: 0
@@ -13792,7 +13795,7 @@ MonoBehaviour:
   _x: 4
   _y: 4
   _isPlasingCell: 0
-  AllowPlasing: 1
+  AllowPlasing: 0
 --- !u!1 &2075974966
 GameObject:
   m_ObjectHideFlags: 0
@@ -13832,7 +13835,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2075974966}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
