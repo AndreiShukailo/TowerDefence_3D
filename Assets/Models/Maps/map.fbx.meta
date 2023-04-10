@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Mat_1
-    second: {fileID: 2100000, guid: 0b08132bba3538f408f4f866f8707e6c, type: 2}
+      name: land_mat_1
+    second: {fileID: 2100000, guid: 62768db584b985746b53f5a6c8b9c6c3, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: mat_1
+    second: {fileID: 2800000, guid: 66280a8848b61b14eb39ffbb547ef22e, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

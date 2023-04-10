@@ -41,7 +41,7 @@ public class TowersGrid : MonoBehaviour
             if (groundPlane.Raycast(ray, out float enter))
             {
                 Vector3 worldPosition = ray.GetPoint(enter);
-
+                worldPosition += new Vector3(-1, 0, -2);
                 var x = (int)worldPosition.x;
                 var y = (int)worldPosition.z;
                 var avalible = false;
