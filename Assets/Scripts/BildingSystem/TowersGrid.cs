@@ -16,12 +16,13 @@ public class TowersGrid : MonoBehaviour
     private static Cell[,] _grid;
     private Tower _flyingTower;
     private Camera _camera;
+    private CameraMovement _cameraMovement;
 
     private void Awake()
     {
         CreateGrid();
-
         _camera = Camera.main;
+        _cameraMovement = _camera.GetComponent<CameraMovement>();
         _cells = GetComponentInChildren<Cells>();
     }
 
@@ -77,6 +78,7 @@ public class TowersGrid : MonoBehaviour
 
         _flyingTower = Instantiate(towerPref);
         _cells.gameObject.SetActive(true);
+        _cameraMovement.AllowMove = false;
     }
 
     private void PlaceFlyingTower(int placeX, int plaseY, bool avalible)
@@ -95,5 +97,6 @@ public class TowersGrid : MonoBehaviour
         }
 
         _flyingTower = null;
+        _cameraMovement.AllowMove = true;
     }
 }
