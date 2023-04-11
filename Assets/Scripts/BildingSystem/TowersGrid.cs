@@ -5,40 +5,46 @@ using System.Linq;
 using UnityEngine.UIElements;
 using System;
 using System.Drawing;
+using UnityEngine.Events;
 
 public class TowersGrid : MonoBehaviour
 {
     [SerializeField] private Vector2Int _size = new Vector2Int(10, 10);
     public Vector2Int Size => _size;
-    public Cell[] GridArray;
+
+    public static TowersGrid Instance;
 
     private Cells _cells;
+    private Cell[] _gridArray;
     private static Cell[,] _grid;
-    private Tower _flyingTower;
     private Camera _camera;
-    private CameraMovement _cameraMovement;
+    private Plane _plane;
+
+    private Tower _flyingTower;
+
+    public UnityAction OnStartPlacingTower;
+    public UnityAction OnStopPlacingTower;
 
     private void Awake()
     {
-        CreateGrid();
+        Instance = this;
         _camera = Camera.main;
-        _cameraMovement = _camera.GetComponent<CameraMovement>();
         _cells = GetComponentInChildren<Cells>();
     }
 
     private void Start()
     {
         _cells.gameObject.SetActive(false);
+        _plane = new Plane(Vector3.up, Vector3.zero);
     }
 
     private void Update()
     {
         if (_flyingTower != null)
         {
-            var groundPlane = new Plane(Vector3.up, Vector3.zero);
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-            if (groundPlane.Raycast(ray, out float enter))
+            if (_plane.Raycast(ray, out float enter))
             {
                 Vector3 worldPosition = ray.GetPoint(enter);
                 worldPosition += new Vector3(-1, 0, -2);
@@ -46,7 +52,7 @@ public class TowersGrid : MonoBehaviour
                 var y = (int)worldPosition.z;
                 var avalible = false;
 
-                if (GridArray.Any(cell => (cell.X == x) && (cell.Y == y) && cell.IsPlasingCell && cell.AllowPlasing))
+                if (_gridArray.Any(cell => (cell.X == x) && (cell.Y == y) && cell.IsPlasingCell && cell.AllowPlasing))
                     avalible = true;
 
                 if (avalible)
@@ -64,10 +70,11 @@ public class TowersGrid : MonoBehaviour
         }
     }
 
-    private void CreateGrid()
+    public void CreateGrid(Cell[] gridArray)
     {
+        _gridArray = gridArray;
         _grid = new Cell[_size.x, _size.y];
-        foreach (var cell in GridArray)
+        foreach (var cell in gridArray)
             _grid[cell.X, cell.Y] = cell;
     }
 
@@ -78,7 +85,8 @@ public class TowersGrid : MonoBehaviour
 
         _flyingTower = Instantiate(towerPref);
         _cells.gameObject.SetActive(true);
-        _cameraMovement.AllowMove = false;
+
+        OnStartPlacingTower?.Invoke();
     }
 
     private void PlaceFlyingTower(int placeX, int plaseY, bool avalible)
@@ -97,6 +105,7 @@ public class TowersGrid : MonoBehaviour
         }
 
         _flyingTower = null;
-        _cameraMovement.AllowMove = true;
+
+        OnStopPlacingTower?.Invoke();
     }
 }

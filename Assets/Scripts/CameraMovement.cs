@@ -11,7 +11,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _minY = 5;
     [SerializeField] private float _zoomOutMax = 4;
     [SerializeField] private float _zoomOutMin = 2;
-    public bool AllowMove = true;
+    private bool _allowMove = true;
     private Vector3 _tochStart;
     private Camera _camera;
     private bool _allowMooveCamera = true;
@@ -21,9 +21,21 @@ public class CameraMovement : MonoBehaviour
         _camera = GetComponent<Camera>();
     }
 
+    private void OnEnable()
+    {
+        TowersGrid.Instance.OnStartPlacingTower += StartPlacingTower;
+        TowersGrid.Instance.OnStopPlacingTower += StopPlacingTower;
+    }
+
+    private void OnDisable()
+    {
+        TowersGrid.Instance.OnStartPlacingTower -= StartPlacingTower;
+        TowersGrid.Instance.OnStopPlacingTower -= StopPlacingTower;
+    }
+
     private void Update()
     {
-        if (AllowMove)
+        if (_allowMove)
         {
             if (Input.touchCount == 2)
             {
@@ -73,5 +85,15 @@ public class CameraMovement : MonoBehaviour
     private void Zoom(float increment)
     {
         _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize - increment, _zoomOutMin, _zoomOutMax);
+    }
+
+    private void StartPlacingTower()
+    {
+        _allowMove = false;
+    }
+
+    private void StopPlacingTower() 
+    {
+        _allowMove = true;
     }
 }

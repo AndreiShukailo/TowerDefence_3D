@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Cells : MonoBehaviour
 {
+    [SerializeField] private Cell[] _cellPrefabs;
     [SerializeField] private TowersGrid _towersGrid;
-    [SerializeField] private Cell _cellPrefab;
 
     private void Awake()
     {
         var cells = gameObject.GetComponentsInChildren<Cell>();
-        _towersGrid.GridArray = cells;
+        _towersGrid.CreateGrid(cells);
     }
 
     [ContextMenu("Generate grid")]
@@ -26,7 +26,7 @@ public class Cells : MonoBehaviour
         for (int x = 0; x < size.x; x++)
             for (int y = 0; y < size.y; y++)
             {
-                var cell = Instantiate(_cellPrefab, transform);
+                var cell = Instantiate(_cellPrefabs[Random.Range(0,_cellPrefabs.Length - 1)], transform);
                 cell.transform.position = new Vector3(0.5f, 0, 0.5f) + new Vector3(x, 0, y);
                 cell.CreateCell(x, y);
             }
