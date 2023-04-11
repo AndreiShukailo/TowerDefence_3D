@@ -1,12 +1,32 @@
 fileFormatVersion: 2
-guid: 010a7b9f4271bb347976cd1a496e2d88
+guid: b4b576e57ae3fd740a44cc6f46849dfd
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: land_mat_1
+    second: {fileID: 2100000, guid: 4aa3d87e45ad0264bb04eb43fd1f50ca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tower_mat_1
+    second: {fileID: 2100000, guid: 278e43c49ff8c454aac89f0415393138, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: mat_1
+    second: {fileID: 2800000, guid: 397edf09a1b1bc94081694207166b4c1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: tower_mat_1
+    second: {fileID: 2800000, guid: 254ac05f06ff0464d824bdfff0a9f2b1, type: 3}
   materials:
     materialImportMode: 2
-    materialName: 0
+    materialName: 1
     materialSearch: 1
     materialLocation: 1
   animations:
