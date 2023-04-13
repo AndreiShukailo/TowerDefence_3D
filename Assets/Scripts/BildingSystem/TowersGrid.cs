@@ -93,7 +93,7 @@ public class TowersGrid : MonoBehaviour
     {
         if (avalible)
         {
-            _flyingTower.SetDefaultTransparent();
+            _flyingTower.BildTower();
             _grid[placeX, plaseY].PlaceTower();
 
             _cells.gameObject.SetActive(false);

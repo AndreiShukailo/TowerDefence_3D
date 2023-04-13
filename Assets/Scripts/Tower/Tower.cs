@@ -7,11 +7,19 @@ public class Tower : MonoBehaviour
 {
     private Renderer[] _mainRender;
     private Color[] _defaultColor;
+    private bool _isRedy;
+    public bool IsRedy => _isRedy;
 
     private void Awake()
     {
         _mainRender = GetComponentsInChildren<Renderer>();
         _defaultColor = _mainRender.Select(render => render.material.color).ToArray();
+    }
+
+    public void BildTower()
+    {
+        _isRedy = true;
+        SetDefaultTransparent();
     }
 
     public void SetTransparent(bool avalible)
@@ -20,7 +28,7 @@ public class Tower : MonoBehaviour
             renderer.material.color = avalible ? Color.green : Color.red;
     }
 
-    public void SetDefaultTransparent()
+    private void SetDefaultTransparent()
     {
         for (int i = 0; i < _mainRender.Length; i++)
         {
