@@ -21,16 +21,16 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             enemy.TakeDamage(_damage);
         }
     }
 
     private void Update()
     {
-        if (_target != null)
+        if (_target.gameObject.activeSelf)
             transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime * _speed);
         else
-            Destroy(gameObject);
+            gameObject.SetActive(false);
     }
 }

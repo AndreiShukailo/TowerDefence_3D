@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Tower), typeof(CapsuleCollider))]
 public class TowerWeapon : MonoBehaviour
@@ -71,9 +72,9 @@ public class TowerWeapon : MonoBehaviour
     }
 
     private void Shoot(Enemy target)
-    {     
-        Projectile projectile = Instantiate(_projectile);
-        projectile.Create(_projectileSpeed, _damage, target, _shootPoint.position);
+    {
+        var gameObject = GlobalObjectPoller.instance.Get(_projectile.gameObject);
+        gameObject.GetComponent<Projectile>().Create(_projectileSpeed, _damage, target, _shootPoint.position);
         _timer = 0;
     }
 }

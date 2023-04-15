@@ -14,26 +14,26 @@ public class Enemy : MonoBehaviour
     private float _currentHealth;
     public UnityAction OnDeth;
 
-    public void Awake()
+    void Awake()
     {
         _movement = GetComponent<EnemyMovement>();
-        _currentHealth = _maxHealth;
     }
 
     public void Create(Vector3 target, Vector3 startPosition)
     {
         transform.position = startPosition;
         _movement.SetTarget(target);
+        _currentHealth = _maxHealth;
     }
 
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
         if (_currentHealth <= 0)
-            Destroy(gameObject);
+            gameObject.SetActive(false);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         OnDeth?.Invoke();
     }
