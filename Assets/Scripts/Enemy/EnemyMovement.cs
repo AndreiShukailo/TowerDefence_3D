@@ -15,9 +15,14 @@ public class EnemyMovement : MonoBehaviour
         _agent.speed = _speed;
     }
 
-    public void SetTarget(Vector3 target)
+    public void SetTarget(Vector3 target, Vector3 position)
     {
+        _agent.Warp(position);
         _agent.SetDestination(target);
     }
 
+    public void StopMove()
+    {
+        _agent.CompleteOffMeshLink();
+    }
 }

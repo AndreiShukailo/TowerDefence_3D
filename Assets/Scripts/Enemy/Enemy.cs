@@ -9,8 +9,10 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _damage;
     [SerializeField] private float _maxHealth;
+    public float MaxHealth => _maxHealth;
     private EnemyMovement _movement;
-    public EnemyMovement Movement => _movement;
+
+    public UnityAction<float> OnHealthChanged;
     private float _currentHealth;
     public UnityAction OnDeth;
 
@@ -21,20 +23,23 @@ public class Enemy : MonoBehaviour
 
     public void Create(Vector3 target, Vector3 startPosition)
     {
-        transform.position = startPosition;
-        _movement.SetTarget(target);
+        _movement.SetTarget(target, startPosition);
         _currentHealth = _maxHealth;
+        OnHealthChanged?.Invoke(_currentHealth);
     }
 
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
+        OnHealthChanged?.Invoke(_currentHealth);
         if (_currentHealth <= 0)
-            gameObject.SetActive(false);
+            Death();
     }
 
-    private void OnDisable()
+    private void Death()
     {
+        _movement.StopMove();
         OnDeth?.Invoke();
+        gameObject.SetActive(false);
     }
 }
