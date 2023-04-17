@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(BoxCollider), typeof(Outline))]
 public class Tower : MonoBehaviour
 {
+    private Outline _outline;
     private Renderer[] _mainRender;
     private Color[] _defaultColor;
     private bool _isRedy;
@@ -17,6 +18,7 @@ public class Tower : MonoBehaviour
     public UnityAction DeactiveTower;
     private void Awake()
     {
+        _outline = GetComponent<Outline>();
         _mainRender = GetComponentsInChildren<Renderer>();
         _defaultColor = _mainRender.Select(render => render.material.color).ToArray();
     }
@@ -55,6 +57,7 @@ public class Tower : MonoBehaviour
 
     private void SetActiveTower()
     {
+        _outline.enabled = true;
         ActiveTower?.Invoke();
         TowersController.Instance.SwitschActiveTower(this);
         _isActive = true;
@@ -62,6 +65,7 @@ public class Tower : MonoBehaviour
 
     public void SetDeactiveTower()
     {
+        _outline.enabled = false;
         DeactiveTower?.Invoke();
         _isActive = false;
     }

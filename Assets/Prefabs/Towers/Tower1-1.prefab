@@ -25,9 +25,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331269948212340649}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 0.001, z: 4}
+  m_LocalScale: {x: 4, y: 0.00001, z: 4}
   m_Children: []
   m_Father: {fileID: 2483800527167818496}
   m_RootOrder: 1
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c2f16603c1cc9c04a8e1f4b2653cd7cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 2483800527167818496}
   - component: {fileID: 2483800527167818499}
   - component: {fileID: 6091079532476881796}
+  - component: {fileID: 6627706700578506650}
   m_Layer: 6
   m_Name: Tower1-1
   m_TagString: Untagged
@@ -140,6 +141,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.58378726, y: 0.60974133, z: 0.92803717}
   m_Center: {x: 0.18509457, y: 0.28434312, z: 0.0040049553}
+--- !u!114 &6627706700578506650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483800527167818497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.22328758, g: 1, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &9193939721451170901
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,13 +241,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4211090453722689680, guid: c0ab29f5f07e9ec45b82ebce1d201ad4, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4211090453722689680, guid: c0ab29f5f07e9ec45b82ebce1d201ad4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8f817ee917c4d1f44ad394fb5976cbbf, type: 2}
+    - target: {fileID: -4211090453722689680, guid: c0ab29f5f07e9ec45b82ebce1d201ad4, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e70f047388f9e164285b165315cd6d73, type: 2}
+    - target: {fileID: -2749648983533674252, guid: c0ab29f5f07e9ec45b82ebce1d201ad4, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -2749648983533674252, guid: c0ab29f5f07e9ec45b82ebce1d201ad4, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8f817ee917c4d1f44ad394fb5976cbbf, type: 2}
+    - target: {fileID: -2749648983533674252, guid: c0ab29f5f07e9ec45b82ebce1d201ad4, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e70f047388f9e164285b165315cd6d73, type: 2}
     - target: {fileID: -330272929052454594, guid: c0ab29f5f07e9ec45b82ebce1d201ad4, type: 3}
       propertyPath: m_Name
       value: Gun

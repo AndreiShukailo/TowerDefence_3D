@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2483800527167818496}
   - component: {fileID: 2483800527167818499}
   - component: {fileID: 2637231889704465139}
+  - component: {fileID: 1173454942062552430}
   m_Layer: 6
   m_Name: Tower1-2
   m_TagString: Untagged
@@ -59,6 +60,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.56155175, y: 0.7450433, z: 0.96653354}
   m_Center: {x: 0.21922413, y: 0.35524327, z: 0.01673323}
+--- !u!114 &1173454942062552430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2483800527167818497}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.22352941, g: 1, b: 0, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &3894224562930968136
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 3894224562930968136}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 0.0009999999, z: 4}
+  m_LocalScale: {x: 4, y: 0.00001, z: 4}
   m_Children: []
   m_Father: {fileID: 2483800527167818496}
   m_RootOrder: 1
@@ -118,7 +137,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c2f16603c1cc9c04a8e1f4b2653cd7cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
