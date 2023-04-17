@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class Tower : MonoBehaviour
 {
     private Renderer[] _mainRender;
     private Color[] _defaultColor;
     private bool _isRedy;
+    private bool _isActive = false;
     public bool IsRedy => _isRedy;
-
+    public UnityAction ActiveTower;
+    public UnityAction DeactiveTower;
     private void Awake()
     {
         _mainRender = GetComponentsInChildren<Renderer>();
@@ -34,5 +38,31 @@ public class Tower : MonoBehaviour
         {
             _mainRender[i].material.color = _defaultColor[i];
         }
+    }
+
+    private void OnMouseUpAsButton()
+    {
+        if (CameraMovement.Instance.AllowTowerClick)
+        {
+            if (!_isActive)
+                SetActiveTower();
+            else
+                SetDeactiveTower();
+        }
+
+    }
+
+    private void SetActiveTower()
+    {
+        ActiveTower?.Invoke();
+        TowersController.Instance.SwitschActiveTower(this);
+        _isActive = true;
+    }
+
+    public void SetDeactiveTower()
+    {
+        DeactiveTower?.Invoke();
+        _isActive = false;
+        TowersController.Instance.DeactiveCurrenTower(this);
     }
 }

@@ -11,14 +11,24 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _minY = 5;
     [SerializeField] private float _zoomOutMax = 4;
     [SerializeField] private float _zoomOutMin = 2;
+    public static CameraMovement Instance { get; private set; }
     private bool _allowMove = true;
     private Vector3 _tochStart;
     private Camera _camera;
     private bool _allowMooveCamera = true;
+    private bool _allowTowerClick = true;
+    public bool AllowTowerClick => _allowTowerClick;
+    private Plane _groundPlane;
 
     private void Awake()
     {
+        Instance = this;
         _camera = GetComponent<Camera>();
+    }
+
+    private void Start()
+    {
+        _groundPlane = new Plane(Vector3.up, Vector3.zero);
     }
 
     private void OnEnable()
@@ -51,18 +61,20 @@ public class CameraMovement : MonoBehaviour
 
                 float difference = curentMagnitude - prevMagnitude;
                 Zoom(difference * 0.001f);
+
+                _allowTowerClick = false;
             }
             else if (Input.touchCount <= 1)
-            {
-                var groundPlane = new Plane(Vector3.up, Vector3.zero);
+            {              
                 var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-                if (groundPlane.Raycast(ray, out float enter))
+                if (_groundPlane.Raycast(ray, out float enter))
                 {
                     Vector3 worldPosition = ray.GetPoint(enter);
 
                     if (Input.GetMouseButtonDown(0))
                     {
+                        _allowTowerClick = true;
                         _allowMooveCamera = true;
                         _tochStart = worldPosition;
                     }
@@ -74,6 +86,9 @@ public class CameraMovement : MonoBehaviour
                         position.x = Mathf.Clamp(position.x, _minX, _maxX);
                         position.z = Mathf.Clamp(position.z, _minY, _maxY);
                         _camera.transform.position = position;
+                        
+                        if(direction != new Vector3(0,0,0))
+                            _allowTowerClick = false;
                     }
                 }
 
