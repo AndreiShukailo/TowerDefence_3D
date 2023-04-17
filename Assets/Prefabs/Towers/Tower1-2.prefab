@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 1447681815757949051}
   - component: {fileID: 1615332292422229770}
   - component: {fileID: 8153317190314647750}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: DamageArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,6 +248,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tower_fast_2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f9a6c418647422e42995024a8a260b09, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2229217097805961029, guid: f9a6c418647422e42995024a8a260b09, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -256,6 +260,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7dd3d684ba588a640a478711516b9799, type: 2}
+    - target: {fileID: 8017795142837601244, guid: f9a6c418647422e42995024a8a260b09, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9a6c418647422e42995024a8a260b09, type: 3}
 --- !u!4 &7064202844719110974 stripped
