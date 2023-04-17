@@ -264,7 +264,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 3
+  m_Radius: 2.5
   m_Height: 0.30633572
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -281,11 +281,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageArea: {fileID: 1447681815757949051}
-  _damage: 5
+  _damage: 2
   _projectile: {fileID: 393167689968668509, guid: 3cc03574e675e214680b6ee9369b3181, type: 3}
   _shootPoint: {fileID: 3982813974111450384}
-  _radius: 3
+  _radius: 2.5
   _rotationSpeed: 10
   _projectileSpeed: 10
-  _shootingSpeed: 2
+  _shootingSpeed: 3
   _tower: {fileID: 2483800527167818499}

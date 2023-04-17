@@ -2,36 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPooller
+public class ObjectPooller<T> where T : MonoBehaviour
 {
     public GameObject Prefab;
-    private List<GameObject> _pool;
+    public T Component;
+    private List<T> _pool;
 
-    public ObjectPooller (GameObject prefab)
+    public ObjectPooller(T component)
     {
-        Prefab = prefab;
-        _pool = new List<GameObject>();
+        Component = component;
+        Prefab = component.gameObject;
+        _pool = new List<T>();
     }
 
-    private GameObject CreateObject()
+    private T CreateObject(T component)
     {
-        var rez = GameObject.Instantiate(Prefab);
-        rez.SetActive(true);
+        var rez = GameObject.Instantiate(component);
         _pool.Add(rez);
         return rez;
     }
 
-    public GameObject Get()
+    public T Get(T component)
     {
-        GameObject rez = _pool.Find(o => o.activeSelf == false);
+        T rez = _pool.Find(o => o.gameObject.activeSelf == false);
 
         if (rez != null)
         {
-            rez.SetActive(true);
+            rez.gameObject.SetActive(true);
         }
         else
         {
-            rez = CreateObject();
+            rez = CreateObject(component);
         }
 
         return rez;

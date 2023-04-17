@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Tower : MonoBehaviour
 {
     private Renderer[] _mainRender;
@@ -42,12 +43,12 @@ public class Tower : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        if (CameraMovement.Instance.AllowTowerClick)
+        if (CameraMovement.Instance.AllowTowerClick && _isRedy)
         {
             if (!_isActive)
                 SetActiveTower();
             else
-                SetDeactiveTower();
+                TowersController.Instance.DeactiveCurrenTower();
         }
 
     }
@@ -63,6 +64,5 @@ public class Tower : MonoBehaviour
     {
         DeactiveTower?.Invoke();
         _isActive = false;
-        TowersController.Instance.DeactiveCurrenTower(this);
     }
 }

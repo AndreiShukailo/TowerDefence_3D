@@ -20,8 +20,12 @@ public class TowersController : MonoBehaviour
         _currentActive = tower;
     }
 
-    public void DeactiveCurrenTower(Tower tower)
+    public void DeactiveCurrenTower()
     {
-        _currentActive = null;
+        if (_currentActive != null)
+        {
+            _currentActive.SetDeactiveTower();
+            _currentActive = null;
+        }
     }
 }

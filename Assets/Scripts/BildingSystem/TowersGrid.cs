@@ -80,11 +80,9 @@ public class TowersGrid : MonoBehaviour
 
     public void StartPlacingTower(Tower towerPref)
     {
-        if (_flyingTower != null)
-            Destroy(_flyingTower.gameObject);
-
-        _flyingTower = Instantiate(towerPref);
+        _flyingTower = GlobalObjectPoller.instance.Get(towerPref);
         _cells.gameObject.SetActive(true);
+        TowersController.Instance.DeactiveCurrenTower();
 
         OnStartPlacingTower?.Invoke();
     }
@@ -100,7 +98,7 @@ public class TowersGrid : MonoBehaviour
         }
         else
         {
-            Destroy(_flyingTower.gameObject);
+            _flyingTower.gameObject.SetActive(false);
             _cells.gameObject.SetActive(false);
         }
 

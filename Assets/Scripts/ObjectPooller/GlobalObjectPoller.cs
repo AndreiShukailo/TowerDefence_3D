@@ -8,52 +8,35 @@ using Object = System.Object;
 public class GlobalObjectPoller : MonoBehaviour
 {
     public static GlobalObjectPoller instance;
-    [SerializeField] private List<ObjectPooller> _pollers = new List<ObjectPooller>();
+    [SerializeField] private List<ObjectPooller<MonoBehaviour>> _pollers = new List<ObjectPooller<MonoBehaviour>>();
 
     private void Awake()
     {
         instance = this;
     }
 
-    private GameObject GetFromPools (GameObject pref)
+    private T GetFromPools<T>(T component) where T : MonoBehaviour
     {
-        var pool = _pollers.Find(pooler => pooler.Prefab == pref);
+        var pool = _pollers.Find(pooler => pooler.Prefab == component.gameObject);
+        var mono = component as MonoBehaviour;
+        T rez;
 
         if (pool == null)
         {
-            var newPool = new ObjectPooller(pref);
+            var newPool = new ObjectPooller<MonoBehaviour>(mono);
             _pollers.Add(newPool);
-            return newPool.Get();
+             rez = newPool.Get(mono) as T;
         }
         else
         {
-            return pool.Get();
+            rez = pool.Get(mono) as T;
         }
+
+        return rez;
     }
 
-    public GameObject Get(GameObject pref)
+    public T Get<T>(T component) where T: MonoBehaviour
     {
-        return GetFromPools(pref);
+        return GetFromPools(component);
     }
-
-    //private void RemoveFromPool(GameObject pref)
-    //{
-    //    var pool = _pollers.Find(pooler => pooler.Prefab == pref);
-
-    //    if (pool == null)
-    //    {
-    //        var newPool = new ObjectPooller(pref);
-    //        _pollers.Add(newPool);
-    //        newPool.Remove(pref);
-    //    }
-    //    else
-    //    {
-    //        pool.Remove(pref);
-    //    }
-    //}
-
-    //public void Remove(GameObject obj)
-    //{
-    //    RemoveFromPool(obj);
-    //}
 }

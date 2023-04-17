@@ -60,10 +60,10 @@ public class Spawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        var gameObject = GlobalObjectPoller.instance.Get(_currentEnemy.gameObject);
+        var enemy = GlobalObjectPoller.instance.Get(_currentEnemy);
         var target = _targetPoins[Random.Range(0, _targetPoins.Length)];
         var position = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
-        gameObject.GetComponent<Enemy>().Create(target, position);
+        enemy.Create(target, position);
     }
 
     public void StartSpawning()

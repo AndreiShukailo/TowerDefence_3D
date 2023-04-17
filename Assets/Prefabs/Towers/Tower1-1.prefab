@@ -310,6 +310,6 @@ MonoBehaviour:
   _shootPoint: {fileID: 4802212994087057706}
   _radius: 2
   _rotationSpeed: 10
-  _projectileSpeed: 5
+  _projectileSpeed: 10
   _shootingSpeed: 1
   _tower: {fileID: 2483800527167818499}

@@ -76,8 +76,8 @@ public class TowerWeapon : MonoBehaviour
 
     private void Shoot(Enemy target)
     {
-        var gameObject = GlobalObjectPoller.instance.Get(_projectile.gameObject);
-        gameObject.GetComponent<Projectile>().Create(_projectileSpeed, _damage, target, _shootPoint.position);
+        var projectile = GlobalObjectPoller.instance.Get(_projectile);
+        projectile.Create(_projectileSpeed, _damage, target, _shootPoint.position);
         _timer = 0;
     }
 
