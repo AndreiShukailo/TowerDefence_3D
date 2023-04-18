@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
+using UnityEngine.Events;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -19,6 +17,8 @@ public class CameraMovement : MonoBehaviour
     private bool _allowTowerClick = true;
     public bool AllowTowerClick => _allowTowerClick;
     private Plane _groundPlane;
+
+    public UnityAction OnCameraMoove;
 
     private void Awake()
     {
@@ -86,7 +86,8 @@ public class CameraMovement : MonoBehaviour
                         position.x = Mathf.Clamp(position.x, _minX, _maxX);
                         position.z = Mathf.Clamp(position.z, _minY, _maxY);
                         _camera.transform.position = position;
-                        
+                        OnCameraMoove?.Invoke();
+
                         if(direction != new Vector3(0,0,0))
                             _allowTowerClick = false;
                     }

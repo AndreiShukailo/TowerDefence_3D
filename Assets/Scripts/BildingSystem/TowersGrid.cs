@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.UIElements;
-using System;
-using System.Drawing;
 using UnityEngine.Events;
 
 public class TowersGrid : MonoBehaviour
@@ -91,7 +88,7 @@ public class TowersGrid : MonoBehaviour
     {
         if (avalible)
         {
-            _flyingTower.BildTower();
+            _flyingTower.StartBildTower();
             _grid[placeX, plaseY].PlaceTower();
 
             _cells.gameObject.SetActive(false);
