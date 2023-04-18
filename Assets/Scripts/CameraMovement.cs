@@ -23,7 +23,7 @@ public class CameraMovement : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _camera = GetComponent<Camera>();
+        _camera = Camera.main;
     }
 
     private void Start()

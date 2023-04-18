@@ -5,6 +5,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider), typeof(Outline))]
 public class Tower : MonoBehaviour
 {
+    [SerializeField] private int _coast;
+    public int Coast => _coast;
+    private int _x;
+    private int _y;
+
     private Outline _outline;
     private Renderer[] _mainRender;
     private Color[] _defaultColor;
@@ -12,14 +17,17 @@ public class Tower : MonoBehaviour
     private bool _isRedy = false;
     private bool _isActive = false;
     private bool _isBilding = false;
+    private bool _isDestroying = false;
     private float _timer;
-
     public bool IsRedy => _isRedy;
     public UnityAction ActiveTower;
     public UnityAction DeactiveTower;
     public UnityAction OnStartBildingTower;
     public UnityAction<float, float> OnBildingTower;
     public UnityAction OnEndBildingTower;
+    public UnityAction OnStartDestroying;
+    public UnityAction<float,float> OnDestroying;
+    public UnityAction OnDestroyTower;
     private void Awake()
     {
         _outline = GetComponent<Outline>();
@@ -34,18 +42,25 @@ public class Tower : MonoBehaviour
             _timer += Time.deltaTime;
             BildingTower(_timer, _bildTime);
         }
+        if (_isDestroying)
+        {
+            _timer += Time.deltaTime;
+            DestroyingTower(_timer, _bildTime);
+        }
     }
 
-    public void StartBildTower()
+    public void StartBildTower(int x, int y)
     {
         OnStartBildingTower?.Invoke();
         _isBilding = true;
+        _x = x;
+        _y = y;
     }
 
-    private void BildingTower(float curren, float max)
+    private void BildingTower(float current, float max)
     {
-        OnBildingTower?.Invoke(curren, max);
-        if (curren >= max)
+        OnBildingTower?.Invoke(current, max);
+        if (current >= max)
             BildTower();
     }
 
@@ -56,6 +71,32 @@ public class Tower : MonoBehaviour
         _timer = 0;
         SetDefaultTransparent();
         OnEndBildingTower?.Invoke();
+    }
+
+    public void StartDestroyingTower()
+    {
+        Stats.Instance.ReciveMoney(_coast / 2);
+        OnStartDestroying?.Invoke();
+        _isDestroying = true;
+        _isRedy = false;
+        TowersController.Instance.DeactiveCurrenTower();
+    }
+
+    private void DestroyingTower(float current, float max)
+    {
+        OnDestroying?.Invoke(current, max);
+        if (current >= max)
+            DestroyTower();
+    }
+
+    private void DestroyTower()
+    {
+        _isBilding = false;
+        _isDestroying = false;
+        _timer = 0;
+        OnDestroyTower?.Invoke();
+        TowersGrid.Instance.DestroyTower(_x, _y);
+        gameObject.SetActive(false);
     }
 
     public void SetTransparent(bool avalible)

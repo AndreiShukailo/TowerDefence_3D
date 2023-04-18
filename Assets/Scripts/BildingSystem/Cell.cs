@@ -35,4 +35,10 @@ public class Cell : MonoBehaviour
         AllowPlasing = false;
         _renderer.material = _ban;
     }
+
+    public void DestroyTower()
+    {
+        AllowPlasing = true;
+        _renderer.material = _allow;
+    }
 }

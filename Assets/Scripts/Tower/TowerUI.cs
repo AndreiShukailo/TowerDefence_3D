@@ -3,6 +3,7 @@ using UnityEngine;
 public class TowerUI : MonoBehaviour
 {
     [SerializeField] private BildProgress _bildProgress;
+    [SerializeField] private TowerInfoUI _towerInfoUI;
     [SerializeField] private Tower _tower;
     private Camera _camera;
 
@@ -10,23 +11,34 @@ public class TowerUI : MonoBehaviour
     {
         _camera = Camera.main;
         _bildProgress.gameObject.SetActive(false);
+        _towerInfoUI.gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
-        RotateCanvasOnCamera();
         CameraMovement.Instance.OnCameraMoove += RotateCanvasOnCamera;
+        _tower.ActiveTower += EnableTowerInfo;
+        _tower.DeactiveTower += DisableTowerInfo;
         _tower.OnStartBildingTower += StartBildTower;
+        _tower.OnStartBildingTower += RotateCanvasOnCamera;
         _tower.OnEndBildingTower += EndBildTower;
         _tower.OnBildingTower += _bildProgress.SetBildProgress;
+        _tower.OnStartDestroying += StartBildTower;
+        _tower.OnDestroying += _bildProgress.SetBildProgress;
+        _tower.OnDestroyTower += EndBildTower;
     }
 
     private void OnDisable()
     {
         CameraMovement.Instance.OnCameraMoove -= RotateCanvasOnCamera;
+        _tower.ActiveTower -= EnableTowerInfo;
+        _tower.DeactiveTower -= DisableTowerInfo;
         _tower.OnStartBildingTower -= StartBildTower;
         _tower.OnEndBildingTower -= EndBildTower;
         _tower.OnBildingTower -= _bildProgress.SetBildProgress;
+        _tower.OnStartDestroying -= StartBildTower;
+        _tower.OnDestroying -= _bildProgress.SetBildProgress;
+        _tower.OnDestroyTower -= EndBildTower;
     }
 
     private void RotateCanvasOnCamera()
@@ -42,5 +54,15 @@ public class TowerUI : MonoBehaviour
     private void EndBildTower()
     {
         _bildProgress.gameObject?.SetActive(false);
+    }
+
+    private void EnableTowerInfo()
+    {
+        _towerInfoUI.gameObject.SetActive(true);
+    }
+
+    private void DisableTowerInfo()
+    {
+        _towerInfoUI.gameObject.SetActive(false);
     }
 }

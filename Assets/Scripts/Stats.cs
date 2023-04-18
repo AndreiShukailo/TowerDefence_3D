@@ -17,7 +17,7 @@ public class Stats : MonoBehaviour
         OnMoneyChange?.Invoke(Money);
     }
 
-    private void ReciveMoney(int money)
+    public void ReciveMoney(int money)
     {
         Money += money;
         OnMoneyChange?.Invoke(Money);

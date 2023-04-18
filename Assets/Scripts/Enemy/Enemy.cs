@@ -4,6 +4,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(EnemyMovement))]
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private int _reward;
     [SerializeField] private float _damage;
     [SerializeField] private float _maxHealth;
     public float MaxHealth => _maxHealth;
@@ -35,6 +36,7 @@ public class Enemy : MonoBehaviour
 
     private void Death()
     {
+        Stats.Instance.ReciveMoney(_reward);
         _movement.StopMove();
         OnDeth?.Invoke();
         gameObject.SetActive(false);

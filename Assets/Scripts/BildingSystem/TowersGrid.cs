@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
@@ -8,9 +6,7 @@ public class TowersGrid : MonoBehaviour
 {
     [SerializeField] private Vector2Int _size = new Vector2Int(10, 10);
     public Vector2Int Size => _size;
-
     public static TowersGrid Instance;
-
     private Cells _cells;
     private Cell[] _gridArray;
     private static Cell[,] _grid;
@@ -18,7 +14,6 @@ public class TowersGrid : MonoBehaviour
     private Plane _plane;
 
     private Tower _flyingTower;
-
     public UnityAction OnStartPlacingTower;
     public UnityAction OnStopPlacingTower;
 
@@ -77,18 +72,21 @@ public class TowersGrid : MonoBehaviour
 
     public void StartPlacingTower(Tower towerPref)
     {
-        _flyingTower = GlobalObjectPoller.instance.Get(towerPref);
-        _cells.gameObject.SetActive(true);
-        TowersController.Instance.DeactiveCurrenTower();
+        if (Stats.Instance.Pay(towerPref.Coast))
+        {
+            _flyingTower = GlobalObjectPoller.instance.Get(towerPref);
+            _cells.gameObject.SetActive(true);
+            TowersController.Instance.DeactiveCurrenTower();
 
-        OnStartPlacingTower?.Invoke();
+            OnStartPlacingTower?.Invoke();
+        }
     }
 
     private void PlaceFlyingTower(int placeX, int plaseY, bool avalible)
     {
         if (avalible)
         {
-            _flyingTower.StartBildTower();
+            _flyingTower.StartBildTower(placeX, plaseY);
             _grid[placeX, plaseY].PlaceTower();
 
             _cells.gameObject.SetActive(false);
@@ -102,5 +100,10 @@ public class TowersGrid : MonoBehaviour
         _flyingTower = null;
 
         OnStopPlacingTower?.Invoke();
+    }
+
+    public void DestroyTower(int placeX, int plaseY)
+    {
+        _grid[placeX, plaseY].DestroyTower();
     }
 }
