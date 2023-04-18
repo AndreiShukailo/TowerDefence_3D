@@ -52,7 +52,6 @@ public class Tower : MonoBehaviour
             else
                 TowersController.Instance.DeactiveCurrenTower();
         }
-
     }
 
     private void SetActiveTower()
