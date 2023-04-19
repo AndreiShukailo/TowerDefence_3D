@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(BoxCollider), typeof(Outline))]
 public class Tower : MonoBehaviour
@@ -35,6 +36,20 @@ public class Tower : MonoBehaviour
         _defaultColor = _mainRender.Select(render => render.material.color).ToArray();
     }
 
+    private void OnDisable()
+    {
+        ResetTower();
+    }
+
+    private void ResetTower()
+    {
+        _isRedy = false;
+        _isBilding = false;
+        _isActive = false;
+        _isDestroying = false;
+        _timer = 0;
+    }
+
     private void Update()
     {
         if (_isBilding)
@@ -44,7 +59,7 @@ public class Tower : MonoBehaviour
         }
         if (_isDestroying)
         {
-            _timer += Time.deltaTime;
+            _timer -= Time.deltaTime;
             DestroyingTower(_timer, _bildTime);
         }
     }
@@ -75,6 +90,7 @@ public class Tower : MonoBehaviour
 
     public void StartDestroyingTower()
     {
+        _timer = _bildTime;
         Stats.Instance.ReciveMoney(_coast / 2);
         OnStartDestroying?.Invoke();
         _isDestroying = true;
@@ -85,7 +101,7 @@ public class Tower : MonoBehaviour
     private void DestroyingTower(float current, float max)
     {
         OnDestroying?.Invoke(current, max);
-        if (current >= max)
+        if (current <= 0)
             DestroyTower();
     }
 
@@ -115,7 +131,7 @@ public class Tower : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        if (CameraMovement.Instance.AllowTowerClick && _isRedy)
+        if (!EventSystem.current.IsPointerOverGameObject() && CameraMovement.Instance.AllowTowerClick && _isRedy)
         {
             if (!_isActive)
                 SetActiveTower();

@@ -16,6 +16,7 @@ public class TowerWeapon : MonoBehaviour
     private CapsuleCollider _collider;
     private List<Enemy> _targets = new List<Enemy>(0);
     private float _timer = 0;
+    private Quaternion _defaulRotation;
 
     private void OnDrawGizmos()
     {
@@ -30,6 +31,7 @@ public class TowerWeapon : MonoBehaviour
         HidDamageArea();
         _tower.ActiveTower += ShowDamageArea;
         _tower.DeactiveTower += HidDamageArea;
+        _defaulRotation = transform.rotation;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,6 +52,11 @@ public class TowerWeapon : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        ResetWeapon();
+    }
+
     private void Update()
     {
         if (_tower.IsRedy)
@@ -64,6 +71,12 @@ public class TowerWeapon : MonoBehaviour
             }
         }
             
+    }
+
+    private void ResetWeapon()
+    {
+        _targets.Clear();
+        transform.rotation = _defaulRotation;
     }
 
     private void RotateWeapon(Enemy target)
