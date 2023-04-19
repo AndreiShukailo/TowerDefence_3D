@@ -53,6 +53,7 @@ public class Tower : MonoBehaviour
                 newTower.StartBildTower(_x, _y);
                 TowersController.Instance.DeactiveCurrenTower();
                 this.DestroyTower();
+                TowersGrid.Instance.BildTower(_x, _y);
             }
         }
     }

@@ -9,7 +9,7 @@ public class TowersGrid : MonoBehaviour
     public static TowersGrid Instance;
     private Cells _cells;
     private Cell[] _gridArray;
-    private static Cell[,] _grid;
+    private Cell[,] _grid;
     private Camera _camera;
     private Plane _plane;
 
@@ -90,7 +90,7 @@ public class TowersGrid : MonoBehaviour
         if (avalible)
         {
             _flyingTower.StartBildTower(placeX, plaseY);
-            _grid[placeX, plaseY].PlaceTower();
+            BildTower(placeX, plaseY);
 
             _cells.gameObject.SetActive(false);
         }
@@ -108,5 +108,10 @@ public class TowersGrid : MonoBehaviour
     public void DestroyTower(int placeX, int plaseY)
     {
         _grid[placeX, plaseY].DestroyTower();
+    }
+
+    public void BildTower(int placeX, int plaseY)
+    {
+        _grid[placeX, plaseY].PlaceTower();
     }
 }
