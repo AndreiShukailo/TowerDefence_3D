@@ -10,12 +10,12 @@ public class TowerUI : MonoBehaviour
     private void Awake()
     {
         _camera = Camera.main;
-        _bildProgress.gameObject.SetActive(false);
-        _towerInfoUI.gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
+        _bildProgress.gameObject.SetActive(false);
+        DisableTowerInfo();
         CameraMovement.Instance.OnCameraMoove += RotateCanvasOnCamera;
         _tower.ActiveTower += EnableTowerInfo;
         _tower.DeactiveTower += DisableTowerInfo;

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(BoxCollider), typeof(Outline))]
 public class Tower : MonoBehaviour
 {
+    [SerializeField] private Tower _nextTower;
     [SerializeField] private int _coast;
     public int Coast => _coast;
     private int _x;
@@ -27,7 +28,7 @@ public class Tower : MonoBehaviour
     public UnityAction<float, float> OnBildingTower;
     public UnityAction OnEndBildingTower;
     public UnityAction OnStartDestroying;
-    public UnityAction<float,float> OnDestroying;
+    public UnityAction<float, float> OnDestroying;
     public UnityAction OnDestroyTower;
     private void Awake()
     {
@@ -39,6 +40,21 @@ public class Tower : MonoBehaviour
     private void OnDisable()
     {
         ResetTower();
+    }
+
+    public void UpgradeTower()
+    {
+        if (_nextTower != null)
+        {
+            if (Stats.Instance.Pay(_nextTower.Coast))
+            {
+                var newTower = GlobalObjectPoller.instance.Get(_nextTower);
+                newTower.transform.position = transform.position;
+                newTower.StartBildTower(_x, _y);
+                TowersController.Instance.DeactiveCurrenTower();
+                this.DestroyTower();
+            }
+        }
     }
 
     private void ResetTower()

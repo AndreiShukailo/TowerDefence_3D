@@ -72,13 +72,16 @@ public class TowersGrid : MonoBehaviour
 
     public void StartPlacingTower(Tower towerPref)
     {
-        if (Stats.Instance.Pay(towerPref.Coast))
+        if (_flyingTower == null)
         {
-            _flyingTower = GlobalObjectPoller.instance.Get(towerPref);
-            _cells.gameObject.SetActive(true);
-            TowersController.Instance.DeactiveCurrenTower();
+            if (Stats.Instance.Pay(towerPref.Coast))
+            {
+                _flyingTower = GlobalObjectPoller.instance.Get(towerPref);
+                _cells.gameObject.SetActive(true);
+                TowersController.Instance.DeactiveCurrenTower();
 
-            OnStartPlacingTower?.Invoke();
+                OnStartPlacingTower?.Invoke();
+            }
         }
     }
 
