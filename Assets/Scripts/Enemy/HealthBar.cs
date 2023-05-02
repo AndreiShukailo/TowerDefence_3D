@@ -16,6 +16,11 @@ public class HealthBar : MonoBehaviour
 
     private void ChangeHealth(float currentHealt)
     {
+        if(currentHealt == _enemy.MaxHealth)
+            gameObject.SetActive(false);
+        else if(gameObject.activeSelf == false)
+            gameObject.SetActive(true);
+
         _fill.fillAmount = currentHealt / _enemy.MaxHealth;
     }
 
