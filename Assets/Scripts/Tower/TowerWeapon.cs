@@ -39,7 +39,7 @@ public class TowerWeapon : MonoBehaviour
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             _targets.Add(enemy);
-            enemy.OnDeth += () => _targets.Remove(enemy);
+            enemy.OnDeath += RemooveFromTargets;
         }
     }
 
@@ -48,7 +48,7 @@ public class TowerWeapon : MonoBehaviour
         if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             _targets.Remove(enemy);
-            enemy.OnDeth -= () => _targets.Remove(enemy);
+            enemy.OnDeath -= RemooveFromTargets;
         }
     }
 
@@ -101,5 +101,10 @@ public class TowerWeapon : MonoBehaviour
     private void HidDamageArea()
     {
         _damageArea.gameObject.SetActive(false);
+    }
+
+    private void RemooveFromTargets(Enemy enemy)
+    {
+        _targets.Remove(enemy);
     }
 }

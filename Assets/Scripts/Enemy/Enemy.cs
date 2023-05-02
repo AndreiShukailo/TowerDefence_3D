@@ -6,13 +6,14 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private int _reward;
     [SerializeField] private float _damage;
+    public float Damage => _damage;
     [SerializeField] private float _maxHealth;
     public float MaxHealth => _maxHealth;
     private EnemyMovement _movement;
 
     public UnityAction<float> OnHealthChanged;
     private float _currentHealth;
-    public UnityAction OnDeth;
+    public UnityAction<Enemy> OnDeath;
 
     void Awake()
     {
@@ -31,14 +32,15 @@ public class Enemy : MonoBehaviour
         _currentHealth -= damage;
         OnHealthChanged?.Invoke(_currentHealth);
         if (_currentHealth <= 0)
-            Death();
+            Death(true);
     }
 
-    private void Death()
+    public void Death(bool isKilled)
     {
-        Stats.Instance.ReciveMoney(_reward);
+        if(isKilled)
+            Stats.Instance.ReciveMoney(_reward);
         _movement.StopMove();
-        OnDeth?.Invoke();
+        OnDeath?.Invoke(this);
         gameObject.SetActive(false);
     }
 }

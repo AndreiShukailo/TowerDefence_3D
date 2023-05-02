@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class TowersGrid : MonoBehaviour
 {
     [SerializeField] private Vector2Int _size = new Vector2Int(10, 10);
+    [SerializeField] private LevelUI _levelUI;
     public Vector2Int Size => _size;
     public static TowersGrid Instance;
     private Cells _cells;
@@ -28,6 +29,16 @@ public class TowersGrid : MonoBehaviour
     {
         _cells.gameObject.SetActive(false);
         _plane = new Plane(Vector3.up, Vector3.zero);
+    }
+
+    private void OnEnable()
+    {
+        _levelUI.OnOpenScreen += StopPlasingTower;
+    }
+
+    private void OnDisable()
+    {
+        _levelUI.OnOpenScreen -= StopPlasingTower;
     }
 
     private void Update()
@@ -74,14 +85,12 @@ public class TowersGrid : MonoBehaviour
     {
         if (_flyingTower == null)
         {
-            if (Stats.Instance.Pay(towerPref.Coast))
-            {
-                _flyingTower = GlobalObjectPoller.instance.Get(towerPref);
-                _cells.gameObject.SetActive(true);
-                TowersController.Instance.DeactiveCurrenTower();
+            _flyingTower = GlobalObjectPoller.instance.Get(towerPref);
+            _cells.gameObject.SetActive(true);
+            TowersController.Instance.DeactiveCurrenTower();
 
-                OnStartPlacingTower?.Invoke();
-            }
+            OnStartPlacingTower?.Invoke();
+
         }
     }
 
@@ -89,6 +98,7 @@ public class TowersGrid : MonoBehaviour
     {
         if (avalible)
         {
+            Stats.Instance.Pay(_flyingTower.Coast);
             _flyingTower.StartBildTower(placeX, plaseY);
             BildTower(placeX, plaseY);
 
@@ -103,6 +113,18 @@ public class TowersGrid : MonoBehaviour
         _flyingTower = null;
 
         OnStopPlacingTower?.Invoke();
+    }
+
+    private void StopPlasingTower()
+    {
+        if (_flyingTower != null)
+        {
+            _flyingTower.gameObject.SetActive(false);
+            _cells.gameObject.SetActive(false);
+            _flyingTower = null;
+
+            OnStopPlacingTower?.Invoke();
+        }
     }
 
     public void DestroyTower(int placeX, int plaseY)

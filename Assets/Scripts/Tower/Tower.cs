@@ -4,9 +4,10 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(BoxCollider), typeof(Outline))]
-public class Tower : MonoBehaviour
+public class Tower : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private Tower _nextTower;
+    public Tower NextTower => _nextTower;
     [SerializeField] private int _coast;
     public int Coast => _coast;
     private int _x;
@@ -15,7 +16,7 @@ public class Tower : MonoBehaviour
     private Outline _outline;
     private Renderer[] _mainRender;
     private Color[] _defaultColor;
-    private float _bildTime = 3f;
+    private float _bildTime = 0.1f;
     private bool _isRedy = false;
     private bool _isActive = false;
     private bool _isBilding = false;
@@ -146,17 +147,6 @@ public class Tower : MonoBehaviour
         }
     }
 
-    private void OnMouseUpAsButton()
-    {
-        if (!EventSystem.current.IsPointerOverGameObject() && CameraMovement.Instance.AllowTowerClick && _isRedy)
-        {
-            if (!_isActive)
-                SetActiveTower();
-            else
-                TowersController.Instance.DeactiveCurrenTower();
-        }
-    }
-
     private void SetActiveTower()
     {
         _outline.enabled = true;
@@ -170,5 +160,16 @@ public class Tower : MonoBehaviour
         _outline.enabled = false;
         DeactiveTower?.Invoke();
         _isActive = false;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (CameraMovement.Instance.AllowTowerClick && _isRedy)
+        {
+            if (!_isActive)
+                SetActiveTower();
+            else
+                TowersController.Instance.DeactiveCurrenTower();
+        }
     }
 }

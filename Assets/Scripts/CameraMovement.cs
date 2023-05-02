@@ -3,6 +3,8 @@ using UnityEngine.Events;
 
 public class CameraMovement : MonoBehaviour
 {
+    [SerializeField] private LevelUI _levelUI;
+    [SerializeField] private TowersGrid _towerGrid;
     [SerializeField] private float _maxX = 20;
     [SerializeField] private float _maxY = 15;
     [SerializeField] private float _minX = 10;
@@ -11,6 +13,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _zoomOutMin = 2;
     public static CameraMovement Instance { get; private set; }
     private bool _allowMove = true;
+    public bool AllowMove => _allowMove;
     private Vector3 _tochStart;
     private Camera _camera;
     private bool _allowMooveCamera = true;
@@ -33,14 +36,18 @@ public class CameraMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        TowersGrid.Instance.OnStartPlacingTower += StartPlacingTower;
-        TowersGrid.Instance.OnStopPlacingTower += StopPlacingTower;
+        _levelUI.OnOpenScreen += StartPlacingTower;
+        _levelUI.OnCloseScreen += StopPlacingTower;
+        _towerGrid.OnStartPlacingTower += StartPlacingTower;
+        _towerGrid.OnStopPlacingTower += StopPlacingTower;
     }
 
     private void OnDisable()
     {
-        TowersGrid.Instance.OnStartPlacingTower -= StartPlacingTower;
-        TowersGrid.Instance.OnStopPlacingTower -= StopPlacingTower;
+        _levelUI.OnOpenScreen -= StartPlacingTower;
+        _levelUI.OnCloseScreen -= StopPlacingTower;
+        _towerGrid.OnStartPlacingTower -= StartPlacingTower;
+        _towerGrid.OnStopPlacingTower -= StopPlacingTower;
     }
 
     private void Update()
