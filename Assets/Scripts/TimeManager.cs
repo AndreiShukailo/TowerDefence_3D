@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+    public bool Pause { get; private set; }
+    public static TimeManager Instance { get; private set; }
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void OnEnable()
     {
         LevelUI.Instance.OnOpenScreen += SetPause;
@@ -21,10 +27,12 @@ public class TimeManager : MonoBehaviour
     private void SetPause()
     {
         Time.timeScale = 0;
+        Pause = true;
     }
 
     private void ContinueGame()
     {
         Time.timeScale = 1;
+        Pause = false;
     }
 }

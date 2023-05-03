@@ -13,25 +13,49 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _zoomOutMin = 2;
     public static CameraMovement Instance { get; private set; }
     private bool _allowMove = true;
-    public bool AllowMove => _allowMove;
     private Vector3 _tochStart;
     private Camera _camera;
     private bool _allowMooveCamera = true;
     private bool _allowTowerClick = true;
     public bool AllowTowerClick => _allowTowerClick;
     private Plane _groundPlane;
-
+    private bool _isStrifCameraZoom = false;
     public UnityAction OnCameraMoove;
+    private float _streifSpeed = 1f;
+    private bool _zooming = false;
 
+    private float minX, minY, maxX, maxY;
     private void Awake()
     {
         Instance = this;
         _camera = Camera.main;
     }
 
+    private void OnDrawGizmos()
+    {
+        var distance = Camera.main.aspect * Camera.main.orthographicSize;
+        var cos = 2 / Mathf.Sqrt(2);
+        var minX = _minX + (Camera.main.orthographicSize * cos) + Camera.main.transform.position.y;
+        var maxX = _maxX + (Camera.main.transform.position.y - (Camera.main.orthographicSize * cos));
+        var minY = _minY + distance;
+        var maxY = _maxY - distance;
+
+        Gizmos.DrawLine(new Vector3(minX, 0, minY), new Vector3(maxX, 0, minY));
+        Gizmos.DrawLine(new Vector3(maxX, 0, minY), new Vector3(maxX, 0, maxY));
+        Gizmos.DrawLine(new Vector3(maxX, 0, maxY), new Vector3(minX, 0, maxY));
+        Gizmos.DrawLine(new Vector3(minX, 0, maxY), new Vector3(minX, 0, minY));
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(new Vector3(_minX, 0, _minY), new Vector3(_maxX, 0, _minY));
+        Gizmos.DrawLine(new Vector3(_maxX, 0, _minY), new Vector3(_maxX, 0, _maxY));
+        Gizmos.DrawLine(new Vector3(_maxX, 0, _maxY), new Vector3(_minX, 0, _maxY));
+        Gizmos.DrawLine(new Vector3(_minX, 0, _maxY), new Vector3(_minX, 0, _minY));
+
+    }
     private void Start()
     {
         _groundPlane = new Plane(Vector3.up, Vector3.zero);
+        ResizeBorder();
     }
 
     private void OnEnable()
@@ -56,6 +80,7 @@ public class CameraMovement : MonoBehaviour
         {
             if (Input.touchCount == 2)
             {
+                _zooming = true;
                 _allowMooveCamera = false;
                 var tochZero = Input.GetTouch(0);
                 var tochOne = Input.GetTouch(1);
@@ -67,12 +92,12 @@ public class CameraMovement : MonoBehaviour
                 float curentMagnitude = (tochZero.position - tochOne.position).magnitude;
 
                 float difference = curentMagnitude - prevMagnitude;
-                Zoom(difference * 0.001f);
+                Zoom(difference * 0.003f);
 
                 _allowTowerClick = false;
             }
-            else if (Input.touchCount <= 1)
-            {              
+            else if (Input.touchCount == 1 || Input.GetMouseButton(0))
+            {
                 var ray = _camera.ScreenPointToRay(Input.mousePosition);
 
                 if (_groundPlane.Raycast(ray, out float enter))
@@ -85,29 +110,65 @@ public class CameraMovement : MonoBehaviour
                         _allowMooveCamera = true;
                         _tochStart = worldPosition;
                     }
-                    if (Input.GetMouseButton(0) && _allowMooveCamera)
+                    if (_allowMooveCamera && Input.GetMouseButton(0))
                     {
                         var direction = _tochStart - worldPosition;
                         direction.y = 0;
                         var position = _camera.transform.position + direction;
-                        position.x = Mathf.Clamp(position.x, _minX, _maxX);
-                        position.z = Mathf.Clamp(position.z, _minY, _maxY);
-                        _camera.transform.position = position;
-                        OnCameraMoove?.Invoke();
+                        RestrictCamera(position);
 
-                        if(direction != new Vector3(0,0,0))
+                        if (direction != new Vector3(0, 0, 0))
+                        {
+                            OnCameraMoove?.Invoke();
                             _allowTowerClick = false;
+                        }
                     }
                 }
 
             }
             Zoom(Input.GetAxis("Mouse ScrollWheel"));
         }
+
+        if (_isStrifCameraZoom && !_zooming)
+            StraifCameraZoom();
+
+        _zooming = false;
     }
 
     private void Zoom(float increment)
     {
-        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize - increment, _zoomOutMin, _zoomOutMax);
+        _camera.orthographicSize = Mathf.Clamp(_camera.orthographicSize - increment, _zoomOutMin - 0.2f, _zoomOutMax + 0.2f);
+        if (_camera.orthographicSize < _zoomOutMin || _camera.orthographicSize > _zoomOutMax)
+            _isStrifCameraZoom = true;
+        else
+            _isStrifCameraZoom = false;
+        ResizeBorder();
+        RestrictCamera(_camera.transform.position);
+    }
+
+    private void StraifCameraZoom()
+    {
+        var zoom = Mathf.Abs(_camera.orthographicSize - _zoomOutMin) < Mathf.Abs(_camera.orthographicSize - _zoomOutMax) ? _zoomOutMin : _zoomOutMax;
+        _camera.orthographicSize = Mathf.MoveTowards(_camera.orthographicSize, zoom, Time.deltaTime * _streifSpeed);
+        if (_camera.orthographicSize == zoom)
+            _isStrifCameraZoom = false;
+    }
+
+    private void RestrictCamera(Vector3 newPosition)
+    {
+        newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
+        newPosition.z = Mathf.Clamp(newPosition.z, minY, maxY);
+        _camera.transform.position = newPosition;
+    }
+
+    private void ResizeBorder()
+    {
+        var distance = Camera.main.aspect * Camera.main.orthographicSize;
+        var cos = 2 / Mathf.Sqrt(2);
+        minX = _minX + (Camera.main.orthographicSize * cos) + Camera.main.transform.position.y;
+        maxX = _maxX + (Camera.main.transform.position.y - (Camera.main.orthographicSize * cos));
+        minY = _minY + distance;
+        maxY = _maxY - distance;
     }
 
     private void StartPlacingTower()
@@ -115,7 +176,7 @@ public class CameraMovement : MonoBehaviour
         _allowMove = false;
     }
 
-    private void StopPlacingTower() 
+    private void StopPlacingTower()
     {
         _allowMove = true;
     }
