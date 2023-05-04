@@ -56,6 +56,7 @@ public class CameraMovement : MonoBehaviour
     {
         _groundPlane = new Plane(Vector3.up, Vector3.zero);
         ResizeBorder();
+        RestrictCamera(_camera.transform.position);
     }
 
     private void OnEnable()
@@ -142,6 +143,7 @@ public class CameraMovement : MonoBehaviour
             _isStrifCameraZoom = true;
         else
             _isStrifCameraZoom = false;
+
         ResizeBorder();
         RestrictCamera(_camera.transform.position);
     }
@@ -151,7 +153,7 @@ public class CameraMovement : MonoBehaviour
         var zoom = Mathf.Abs(_camera.orthographicSize - _zoomOutMin) < Mathf.Abs(_camera.orthographicSize - _zoomOutMax) ? _zoomOutMin : _zoomOutMax;
         _camera.orthographicSize = Mathf.MoveTowards(_camera.orthographicSize, zoom, Time.deltaTime * _streifSpeed);
         if (_camera.orthographicSize == zoom)
-            _isStrifCameraZoom = false;
+            _isStrifCameraZoom = false;        
     }
 
     private void RestrictCamera(Vector3 newPosition)

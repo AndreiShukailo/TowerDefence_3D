@@ -50,7 +50,7 @@ public class TowersGrid : MonoBehaviour
             if (_plane.Raycast(ray, out float enter))
             {
                 Vector3 worldPosition = ray.GetPoint(enter);
-                worldPosition += new Vector3(-1, 0, -2);
+                worldPosition += new Vector3(-0.5f, 0, -1f);
                 var x = (int)worldPosition.x;
                 var y = (int)worldPosition.z;
                 var avalible = false;
@@ -61,7 +61,7 @@ public class TowersGrid : MonoBehaviour
                 if (avalible)
                     _flyingTower.transform.position = new Vector3(x + 0.5f, 0, y + 0.5f);
                 else
-                    _flyingTower.transform.position = new Vector3(worldPosition.x, 0.5f, worldPosition.z);
+                    _flyingTower.transform.position = new Vector3(worldPosition.x + 3, 3, worldPosition.z);
 
                 _flyingTower.SetTransparent(avalible);
 

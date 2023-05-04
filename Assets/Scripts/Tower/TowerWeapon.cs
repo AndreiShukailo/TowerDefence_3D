@@ -17,6 +17,9 @@ public class TowerWeapon : MonoBehaviour
     private List<Enemy> _targets = new List<Enemy>(0);
     private float _timer = 0;
     private Quaternion _defaulRotation;
+    private Vector3[] _weaponFreeDirections = new Vector3[4];
+    private float _freeDirectionTimer = 0;
+    private Vector3 _freeDirection = Vector3.zero;
 
     private void OnDrawGizmos()
     {
@@ -32,6 +35,11 @@ public class TowerWeapon : MonoBehaviour
         _tower.ActiveTower += ShowDamageArea;
         _tower.DeactiveTower += HidDamageArea;
         _defaulRotation = transform.rotation;
+
+        _weaponFreeDirections[0] = new Vector3(1, 0, 0);
+        _weaponFreeDirections[1] = new Vector3(0, 0, 1);
+        _weaponFreeDirections[2] = new Vector3(-1, 0, 0);
+        _weaponFreeDirections[3] = new Vector3(0, 0, -1);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -69,6 +77,19 @@ public class TowerWeapon : MonoBehaviour
                 else
                     _timer += Time.deltaTime;
             }
+            else if (_freeDirectionTimer >= 5 / _shootingSpeed)
+            {
+                if (_freeDirection == Vector3.zero)
+                    _freeDirection = GetRandomFreeDirection();
+
+                if (FreeRotateWeapon(_freeDirection))
+                {
+                    _freeDirection = Vector3.zero;
+                    _freeDirectionTimer = 0;
+                }
+            }
+            else
+                _freeDirectionTimer += Time.deltaTime;
         }
             
     }
@@ -84,6 +105,24 @@ public class TowerWeapon : MonoBehaviour
             var dir = (target.transform.position - transform.position).normalized;
             var loockRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
             transform.rotation = Quaternion.LerpUnclamped(transform.rotation, loockRotation, Time.deltaTime * _rotationSpeed);
+    }
+
+    private bool FreeRotateWeapon(Vector3 direction)
+    {
+        var loockRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Lerp(transform.rotation, loockRotation, Time.deltaTime * _rotationSpeed * 0.5f);
+        return Quaternion.Angle(transform.rotation, loockRotation) == 0;
+    }
+
+    private Vector3 GetRandomFreeDirection()
+    {
+        while (true)
+        {
+            var direction = _weaponFreeDirections[Random.Range(0, _weaponFreeDirections.Length)];
+            var loockRotation = Quaternion.LookRotation(direction);
+            if (Quaternion.Angle(transform.rotation, loockRotation) != 0)
+                return direction;
+        }
     }
 
     private void Shoot(Enemy target)
