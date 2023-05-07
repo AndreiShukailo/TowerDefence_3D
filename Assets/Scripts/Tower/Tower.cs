@@ -31,6 +31,7 @@ public class Tower : MonoBehaviour, IPointerClickHandler
     public UnityAction OnStartDestroying;
     public UnityAction<float, float> OnDestroying;
     public UnityAction OnDestroyTower;
+
     private void Awake()
     {
         _outline = GetComponent<Outline>();

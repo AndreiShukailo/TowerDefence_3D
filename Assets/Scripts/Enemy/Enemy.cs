@@ -39,7 +39,6 @@ public class Enemy : MonoBehaviour
     {
         if(isKilled)
             Stats.Instance.ReciveMoney(_reward);
-        _movement.StopMove();
         OnDeath?.Invoke(this);
         gameObject.SetActive(false);
     }

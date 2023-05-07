@@ -10,15 +10,15 @@ public class TowersController : MonoBehaviour
         Instance = this;
     }
 
-    private void OnEnable()
-    {
-        CameraMovement.Instance.OnCameraMoove += DeactiveCurrenTower;    
-    }
+    //private void OnEnable()
+    //{
+    //    CameraMovement.Instance.OnCameraMoove += DeactiveCurrenTower;    
+    //}
 
-    private void OnDisable()
-    {
-        CameraMovement.Instance.OnCameraMoove -= DeactiveCurrenTower;
-    }
+    //private void OnDisable()
+    //{
+    //    CameraMovement.Instance.OnCameraMoove -= DeactiveCurrenTower;
+    //}
 
     public void SwitschActiveTower(Tower tower)
     {

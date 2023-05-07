@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private float _speed;
     private NavMeshAgent _agent;
-    private float _extraRotationSpeed = 360f;
+    private float _extraRotationSpeed = 10f;
 
 
     void Update()

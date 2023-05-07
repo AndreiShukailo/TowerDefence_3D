@@ -90,7 +90,6 @@ public class TowersGrid : MonoBehaviour
             TowersController.Instance.DeactiveCurrenTower();
 
             OnStartPlacingTower?.Invoke();
-
         }
     }
 

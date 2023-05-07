@@ -30,16 +30,17 @@ public class TowerWeapon : MonoBehaviour
     {
         _collider = GetComponent<CapsuleCollider>();
         _collider.radius = _radius;
-        _damageArea.transform.localScale = new Vector3(_radius * 2, _damageArea.transform.localScale.y, _radius * 2);
+        _damageArea.localScale = Vector3.one * _radius * 2;
         HidDamageArea();
         _tower.ActiveTower += ShowDamageArea;
         _tower.DeactiveTower += HidDamageArea;
+        _tower.OnStartBildingTower += HidDamageArea;
         _defaulRotation = transform.rotation;
 
-        _weaponFreeDirections[0] = new Vector3(1, 0, 0);
-        _weaponFreeDirections[1] = new Vector3(0, 0, 1);
-        _weaponFreeDirections[2] = new Vector3(-1, 0, 0);
-        _weaponFreeDirections[3] = new Vector3(0, 0, -1);
+        _weaponFreeDirections[0] = new Vector3(0.5f, 0, 0.5f);
+        _weaponFreeDirections[1] = new Vector3(-0.5f, 0, 0.5f);
+        _weaponFreeDirections[2] = new Vector3(0.5f, 0, -0.5f);
+        _weaponFreeDirections[3] = new Vector3(-0.5f, 0, -0.5f);
     }
 
     private void OnTriggerEnter(Collider other)
