@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class Cell : MonoBehaviour
 {
     [SerializeField] private Image _image;
-    [SerializeField] private Sprite _allow;
-    [SerializeField] private Sprite _ban;
+    [SerializeField] private Color _allow;
+    [SerializeField] private Color _ban;
     [SerializeField] private int _x;
     [SerializeField] private int _y;
     [SerializeField] private bool _isPlasingCell;
@@ -26,7 +26,7 @@ public class Cell : MonoBehaviour
         gameObject.SetActive(_isPlasingCell);
         if (_isPlasingCell)
         {
-            _image.sprite = AllowPlasing ? _allow : _ban;
+            _image.color = AllowPlasing ? _allow : _ban;
         }
         else AllowPlasing = false;
     }
@@ -34,12 +34,12 @@ public class Cell : MonoBehaviour
     public void PlaceTower()
     {
         AllowPlasing = false;
-        _image.sprite = _ban;
+        _image.color = _ban;
     }
 
     public void DestroyTower()
     {
         AllowPlasing = true;
-        _image.sprite = _allow;
+        _image.color = _allow;
     }
 }

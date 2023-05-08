@@ -43,8 +43,8 @@ public class Tower : MonoBehaviour, IPointerClickHandler
                 var newTower = GlobalObjectPoller.instance.Get(_nextTower);
                 newTower.transform.position = transform.position;
                 newTower.BildTower(_x, _y);
-                TowersGrid.Instance.BildTower(_x, _y);
                 this.DestroyTower();
+                TowersGrid.Instance.BildTower(_x, _y);
             }
         }
     }
