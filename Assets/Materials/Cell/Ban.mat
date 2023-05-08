@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Ban
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _EMISSION _ENVIRONMENTREFLECTIONS_OFF
-  m_LightmapFlags: 2
+  m_ShaderKeywords: _ENVIRONMENTREFLECTIONS_OFF
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -107,7 +107,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.0057568057, g: 0.031063532, b: 0.0017330382, a: 0.043137256}
+    - _BaseColor: {r: 0.8584906, g: 0.10101505, b: 0.0040494935, a: 0.25490198}
     - _Color: {r: 0.06802538, g: 0.1933268, b: 0.022390854, a: 0.8}
     - _EmissionColor: {r: 7.999999, g: 0, b: 0.29319367, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

@@ -31,10 +31,10 @@ public class TowerWeapon : MonoBehaviour
         _collider = GetComponent<CapsuleCollider>();
         _collider.radius = _radius;
         _damageArea.localScale = Vector3.one * _radius * 2;
-        HidDamageArea();
         _tower.ActiveTower += ShowDamageArea;
         _tower.DeactiveTower += HidDamageArea;
-        _tower.OnStartBildingTower += HidDamageArea;
+        _tower.OnBildTower += HidDamageArea;
+        _tower.OnCreateTower += ShowDamageArea;
         _defaulRotation = transform.rotation;
 
         _weaponFreeDirections[0] = new Vector3(0.5f, 0, 0.5f);

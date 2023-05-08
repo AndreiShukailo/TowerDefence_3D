@@ -86,6 +86,7 @@ public class TowersGrid : MonoBehaviour
         if (_flyingTower == null)
         {
             _flyingTower = GlobalObjectPoller.instance.Get(towerPref);
+            _flyingTower.OnCreateTower?.Invoke();
             _cells.gameObject.SetActive(true);
             TowersController.Instance.DeactiveCurrenTower();
 
@@ -98,7 +99,7 @@ public class TowersGrid : MonoBehaviour
         if (avalible)
         {
             Stats.Instance.Pay(_flyingTower.Coast);
-            _flyingTower.StartBildTower(placeX, plaseY);
+            _flyingTower.BildTower(placeX, plaseY);
             BildTower(placeX, plaseY);
 
             _cells.gameObject.SetActive(false);

@@ -21,12 +21,16 @@ public class Cells : MonoBehaviour
 
         var size = _towersGrid.Size;
 
+        bool white = false;
+
         for (int x = 0; x < size.x; x++)
             for (int y = 0; y < size.y; y++)
             {
-                var cell = Instantiate(_cellPrefabs[Random.Range(0,_cellPrefabs.Length - 1)], transform);
+                var cellpref = white ? _cellPrefabs[0] : _cellPrefabs[1];
+                var cell = Instantiate(cellpref, transform);
                 cell.transform.position = new Vector3(0.5f, 0, 0.5f) + new Vector3(x, 0, y);
                 cell.CreateCell(x, y);
+                white = !white;
             }
     }
 

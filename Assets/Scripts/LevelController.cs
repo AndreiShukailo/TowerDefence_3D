@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
+    public int LastLevelId { get; private set; } = 0;
     public static LevelController instance;
     public UnityAction OnLoadLevel;
 

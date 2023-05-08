@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Cell : MonoBehaviour
 {
-    [SerializeField] private Renderer _renderer;
-    [SerializeField] private Material _allow;
-    [SerializeField] private Material _ban;
+    [SerializeField] private Image _image;
+    [SerializeField] private Sprite _allow;
+    [SerializeField] private Sprite _ban;
     [SerializeField] private int _x;
     [SerializeField] private int _y;
     [SerializeField] private bool _isPlasingCell;
@@ -22,10 +23,10 @@ public class Cell : MonoBehaviour
     [ContextMenu("UpdateCell")]
     public void UpdateCell()
     {
-        _renderer.enabled = _isPlasingCell;
+        gameObject.SetActive(_isPlasingCell);
         if (_isPlasingCell)
         {
-            _renderer.material = AllowPlasing ? _allow : _ban;
+            _image.sprite = AllowPlasing ? _allow : _ban;
         }
         else AllowPlasing = false;
     }
@@ -33,12 +34,12 @@ public class Cell : MonoBehaviour
     public void PlaceTower()
     {
         AllowPlasing = false;
-        _renderer.material = _ban;
+        _image.sprite = _ban;
     }
 
     public void DestroyTower()
     {
         AllowPlasing = true;
-        _renderer.material = _allow;
+        _image.sprite = _allow;
     }
 }
